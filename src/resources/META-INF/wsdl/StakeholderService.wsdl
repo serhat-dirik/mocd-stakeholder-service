@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="GetStakeholderInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="NameAR" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="NameEN" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="IdentityNumber" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PhoneNumber" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="DateOfBirth" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStakeholderInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetStakeholderInfoResult" type="tns:StakeholderInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="StakeholderInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Stakeholders" type="tns:ArrayOfStakeholder" />
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorTable" type="tns:ErrorTable" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfStakeholder">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Stakeholder" nillable="true" type="tns:Stakeholder" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Stakeholder">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Id" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NameAR" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NameEN" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdentityNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DateOfBirth" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PhoneNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MobileNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BanningStatus" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BanningReason" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Gender" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Nationality" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Licenses" type="tns:ArrayOfLicense" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfLicense">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="License" nillable="true" type="tns:License" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="License">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="LicenseId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LicenseNumber" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ErrorTable">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorMessage" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorEx" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="Authentication" type="tns:Authentication" />
+      <s:complexType name="Authentication">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+        </s:sequence>
+        <s:anyAttribute />
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetStakeholderInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStakeholderInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetStakeholderInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStakeholderInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStakeholderInfoAuthentication">
+    <wsdl:part name="Authentication" element="tns:Authentication" />
+  </wsdl:message>
+  <wsdl:portType name="StakeholderServiceSoap">
+    <wsdl:operation name="GetStakeholderInfo">
+      <wsdl:input message="tns:GetStakeholderInfoSoapIn" />
+      <wsdl:output message="tns:GetStakeholderInfoSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="StakeholderServiceSoap" type="tns:StakeholderServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetStakeholderInfo">
+      <soap:operation soapAction="http://tempuri.org/GetStakeholderInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetStakeholderInfoAuthentication" part="Authentication" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="StakeholderServiceSoap12" type="tns:StakeholderServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetStakeholderInfo">
+      <soap12:operation soapAction="http://tempuri.org/GetStakeholderInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetStakeholderInfoAuthentication" part="Authentication" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="StakeholderService">
+    <wsdl:port name="StakeholderServiceSoap" binding="tns:StakeholderServiceSoap">
+      <soap:address location="https://www.ajmanded.ae/StakeholderService/StakeholderService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="StakeholderServiceSoap12" binding="tns:StakeholderServiceSoap12">
+      <soap12:address location="https://www.ajmanded.ae/StakeholderService/StakeholderService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
